@@ -40,35 +40,67 @@ def goliathBoost(production): return(round((production*9*1.5), 2))
 def MPDBoost(production): return(round((production*2.25*1.5), 2))
     
 def ask():
-    asked = int(input("What calculator would you like to launch?\n(1) Vanilla\n(2) Exogenesis\n"))
-    if asked == 1:
-        askVanilla()
-    elif asked == 2:
-        askExogenesis()
+    try: asked = int(input("What calculator would you like to launch?\n(1) Vanilla\n(2) Exogenesis\n"))
+    except:
+        print("Please input a number.")
+        ask()
+    else:
+        if asked == 1: askVanilla()
+        elif asked == 2: askExogenesis()
+        else:
+            print("Please select an option.")
+            ask()
 
 def askVanilla():
-    asked = int(input("What would you like to calculate?\n(0) Back\n(1) Cryofluid mixers to impact reactors\n(2) Blast mixers to impact reactors\n(3) Surge production\n(4) Cryofluid mixers to thorium reactors\n(5) Thorium to thorium reactors\n(6) Airblast drill boost\n"))
-    if asked == 0: ask()
-    elif asked == 1: print("You can run", str(cryoMixerToImpact(int(input("How many cryofluid mixers? ")))), "reactors.")    
-    elif asked == 2: print("You can run", str(blastMixerToImpact(int(input("How many blast mixers? ")))), "reactors.")
-    elif asked == 3:
-        if surgeCalc(float(input("How much silicon production do you have? ")),float(input("How much copper production do you have? ")),float(input("How much lead production do you have? ")),float(input("How much titanium production do you have? "))) == 1: print("All resources are able to run the same number of surge smelters. Good job!\nResource excess:",titaniumExcess,"titanium,",leadExcess,"lead,",copperExcess,"copper, and",siliconExcess,"silicon.")       
-        else: print("Your resources are not in equilibrium. Your resources can run... Titanium:",int(titaniumRun),"Copper:",int(copperRun),"Lead:",int(leadRun),"Silicon:",int(siliconRun),"surge smelters.\nResource excess:",titaniumExcess,"titanium,",leadExcess,"lead,",copperExcess,"copper, and",siliconExcess,"silicon.") 
-    elif asked == 4: print("You can run", str(int(cryoMixerToThorReact(int(input("How many cryofluid mixers? "))))), "reactors.")
-    elif asked == 5: print("You can run", str(int(thoriumToThorReact(float(input("How much thorium? "))))), "reactors.")
-    elif asked == 6: print("You will produce", str(airblastBoost(float(input("How much does the drill produce? ")))), "items p/sec.")
-    for x in range(3): print("")
-    askVanilla()
+    global saved
+    try: asked = int(input("What would you like to calculate?\n(0) Back\n(1) Cryofluid mixers to impact reactors\n(2) Blast mixers to impact reactors\n(3) Surge production\n(4) Cryofluid mixers to thorium reactors\n(5) Thorium to thorium reactors\n(6) Airblast drill boost\n"))
+    except: 
+        print("Please input a number.")
+        askVanilla()
+    else:
+        if asked == 0: ask()
+        elif asked == -1: 
+            saved = result
+            askVanilla()
+        elif asked == -2: result = saved
+        elif asked == 1: result ="You can run", str(cryoMixerToImpact(int(input("How many cryofluid mixers? ")))), "reactors."    
+        elif asked == 2: result = "You can run", str(blastMixerToImpact(int(input("How many blast mixers? ")))), "reactors."
+        elif asked == 3:
+            if surgeCalc(float(input("How much silicon production do you have? ")),float(input("How much copper production do you have? ")),float(input("How much lead production do you have? ")),float(input("How much titanium production do you have? "))) == 1: result = "All resources are able to run the same number of surge smelters. Good job!\nResource excess:",titaniumExcess,"titanium,",leadExcess,"lead,",copperExcess,"copper, and",siliconExcess,"silicon."       
+            else: result = "Your resources are not in equilibrium. Your resources can run... Titanium:",int(titaniumRun),"Copper:",int(copperRun),"Lead:",int(leadRun),"Silicon:",int(siliconRun),"surge smelters.\nResource excess:",titaniumExcess,"titanium,",leadExcess,"lead,",copperExcess,"copper, and",siliconExcess,"silicon."
+        elif asked == 4: result = "You can run", str(int(cryoMixerToThorReact(int(input("How many cryofluid mixers? "))))), "reactors."
+        elif asked == 5: result = "You can run", str(int(thoriumToThorReact(float(input("How much thorium? "))))), "reactors."
+        elif asked == 6: result = "You will produce", str(airblastBoost(float(input("How much does the drill produce? ")))), "items p/sec."
+        else: 
+            print("Please select an option. Input 0 to go back.")
+            askVanilla()
+        print(result)
+        for x in range(3): print("")
+        askVanilla()
     
 def askExogenesis():
-    asked = int(input("What would you like to calculate?\n(0) Back\n(1) Pyratite factories to blast factories\n(2) Blast factories to impact reactors\n(3) Pyratite factories to impact reactors\n(4) Goliath drill boost\n(5) MPD boost\n"))
-    if asked == 0: ask()
-    elif asked == 1: print("You can run", str(pyraFacToBlastFac(int(input("How many pyratite factories? ")))), "blast factories.")
-    elif asked == 2: print("You can run", str(blastFacToImpact(int(input("How many blast factories? ")))), "reactors.")
-    elif asked == 3: print("You can run", str(blastFacToImpact(pyraFacToBlastFac(int(input("How many pyratite factories? "))))), "reactors.")   
-    elif asked == 4: print("The drill will produce", str(goliathBoost(float(input("How much does the drill produce? ")))), "items p/sec.")
-    elif asked == 5: print("The drill will produce", str(MPDBoost(float(input("How much does the drill produce? ")))), "items p/sec.")
-    for x in range(3): print("")
-    askExogenesis()
+    global saved
+    try: asked = int(input("What would you like to calculate?\n(0) Back\n(1) Pyratite factories to blast factories\n(2) Blast factories to impact reactors\n(3) Pyratite factories to impact reactors\n(4) Goliath drill boost\n(5) MPD boost\n"))
+    except:
+        print("Please input a number.")
+        askExogenesis()
+    else:
+        if asked == 0: ask()
+        elif asked == -1: 
+            saved = result
+            askExogenesis()
+        elif asked == -2: result = saved
+        elif asked == 1: result = "You can run", str(pyraFacToBlastFac(int(input("How many pyratite factories? ")))), "blast factories."
+        elif asked == 2: result = "You can run", str(blastFacToImpact(int(input("How many blast factories? ")))), "reactors."
+        elif asked == 3: result = "You can run", str(blastFacToImpact(pyraFacToBlastFac(int(input("How many pyratite factories? "))))), "reactors."   
+        elif asked == 4: result = "The drill will produce", str(goliathBoost(float(input("How much does the drill produce? ")))), "items p/sec."
+        elif asked == 5: result = "The drill will produce", str(MPDBoost(float(input("How much does the drill produce? ")))), "items p/sec."
+        else: 
+            print("Please select an option. Input 0 to go back.")
+            askExogenesis()
+        print(result)
+        for x in range(3): print("")
+        askExogenesis()
         
+input("Welcome to MinCalc!\nInput the number of the option you would like to select.\nInputting -1 will always save the last result, and inputting -2 will always print the last saved result.\nPress enter to continue.")
 ask()
