@@ -40,6 +40,8 @@ def goliathBoost(production): return(round((production*9*1.5), 2))
 def MPDBoost(production): return(round((production*2.25*1.5), 2))
 
 def thoriumToRTG(thorium): return((thorium*14)//1)
+
+def coalToSteamGen(coal): return((coal*1.5)//1)
     
 def ask():
     try: asked = int(input("What calculator would you like to launch?\n(1) Vanilla\n(2) Exogenesis\n"))
@@ -55,7 +57,8 @@ def ask():
 
 def askVanilla():
     global saved
-    try: asked = int(input("What would you like to calculate?\n(0) Back\n(1) Cryofluid mixers to impact reactors\n(2) Blast mixers to impact reactors\n(3) Surge production\n(4) Cryofluid mixers to thorium reactors\n(5) Thorium to thorium reactors\n(6) Airblast drill boost\n(7) Thorium to RTG\n"))
+    global result
+    try: asked = int(input("What would you like to calculate?\n(0) Back\n(1) Cryofluid mixers to impact reactors\n(2) Blast mixers to impact reactors\n(3) Surge production\n(4) Cryofluid mixers to thorium reactors\n(5) Thorium to thorium reactors\n(6) Airblast drill boost\n(7) Thorium to RTG\n(8) Coal to steam generators\n"))
     except: 
         print("Please input a number.")
         askVanilla()
@@ -74,6 +77,7 @@ def askVanilla():
         elif asked == 5: result = "You can run " + str(int(thoriumToThorReact(float(input("How much thorium? "))))) + " reactors."
         elif asked == 6: result = "You will produce " + str(airblastBoost(float(input("How much does the drill produce? ")))) + " items p/sec."
         elif asked == 7: result = "You can run " + str(int(thoriumToRTG(float(input("How much thorium? "))))) + " generators."
+        elif asked == 8: result = "You can run " + str(int(coalToSteamGen(float(input("How much coal? "))))) + " generators."
         else: 
             print("Please select an option. Input 0 to go back.")
             askVanilla()
@@ -83,6 +87,7 @@ def askVanilla():
     
 def askExogenesis():
     global saved
+    global result
     try: asked = int(input("What would you like to calculate?\n(0) Back\n(1) Pyratite factories to blast factories\n(2) Blast factories to impact reactors\n(3) Pyratite factories to impact reactors\n(4) Goliath drill boost\n(5) MPD boost\n"))
     except:
         print("Please input a number.")
